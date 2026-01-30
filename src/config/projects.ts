@@ -27,10 +27,10 @@ type RawCourse = {
   title: string
   module: string
   nature: string
-  score: string
-  credit: string
-  gpa: string
-  creditGpa: string
+  score: number
+  credit: number
+  gpa: number
+  creditGpa: number
   study: string
   minor: string
   remark?: string
@@ -43,14 +43,26 @@ const makeCourse = (course: RawCourse): ProjectItemType => ({
     zh: `模块：${course.module} | 性质：${course.nature} | 修读性质：${course.study} | 辅修标记：${course.minor}${course.remark ? ` | 备注：${course.remark}` : ''}`,
   },
   tags: [
+    { en: `绩点 ${course.gpa.toFixed(2)}`, zh: `绩点 ${course.gpa.toFixed(2)}` },
     { en: `成绩 ${course.score}`, zh: `成绩 ${course.score}` },
     { en: `学分 ${course.credit}`, zh: `学分 ${course.credit}` },
-    { en: `绩点 ${course.gpa}`, zh: `绩点 ${course.gpa}` },
-    { en: `学分绩点 ${course.creditGpa}`, zh: `学分绩点 ${course.creditGpa}` },
+    { en: `学分绩点 ${course.creditGpa.toFixed(2)}`, zh: `学分绩点 ${course.creditGpa.toFixed(2)}` },
   ],
+  icon: '/images/1.png',
 })
 
 const mapCourses = (courses: RawCourse[]): ProjectItemType[] => courses.map(makeCourse)
+
+const weightedGpa = (courses: RawCourse[]): number => {
+  const totals = courses.reduce(
+    (acc, cur) => ({
+      weighted: acc.weighted + cur.gpa * cur.credit,
+      credits: acc.credits + cur.credit,
+    }),
+    { weighted: 0, credits: 0 }
+  )
+  return totals.credits > 0 ? Number((totals.weighted / totals.credits).toFixed(2)) : 0
+}
 
 // Awards
 export const awardsHeadLine: LocalizedString = { en: 'Awards & Honors', zh: '奖项与荣誉' }
@@ -71,89 +83,111 @@ export const awards: Array<ActivityItemType> = [
 ]
 
 // Course grades by semester
-const semester2023Fall = mapCourses([
-  { code: '0201042', title: '中华民族共同体概论', module: '公共必修课', nature: '必修', score: '92.7', credit: '2.0', gpa: '3.9', creditGpa: '7.80', study: '初修', minor: '主修' },
-  { code: '0301023', title: '大学生职业发展规划', module: '学科专业类基础课', nature: '必修', score: '85.2', credit: '1.0', gpa: '3.7', creditGpa: '3.70', study: '初修', minor: '主修' },
-  { code: '0301036', title: '管理学原理', module: '专业选修课', nature: '选修', score: '74', credit: '2.0', gpa: '2.3', creditGpa: '4.60', study: '初修', minor: '主修' },
-  { code: '0301055', title: '会计学', module: '专业基础课', nature: '必修', score: '76.65', credit: '3.0', gpa: '2.7', creditGpa: '8.10', study: '初修', minor: '主修' },
-  { code: '0301134', title: '政治经济学', module: '专业基础课', nature: '必修', score: '92.6', credit: '4.0', gpa: '3.9', creditGpa: '15.60', study: '初修', minor: '主修' },
-  { code: '1001287', title: '大学英语1（读写译）', module: '公共必修课', nature: '必修', score: '74.67', credit: '2.0', gpa: '2.3', creditGpa: '4.60', study: '初修', minor: '主修' },
-  { code: '1001288', title: '大学英语1（视听说）', module: '公共必修课', nature: '必修', score: '84.86', credit: '2.0', gpa: '3.3', creditGpa: '6.60', study: '初修', minor: '主修' },
-  { code: '0701220', title: '公共体育1', module: '公共必修课', nature: '必修', score: '91.3', credit: '1.0', gpa: '3.9', creditGpa: '3.90', study: '初修', minor: '主修' },
-  { code: '9901001', title: '国防教育及军事训练', module: '素养教育课', nature: '选修', score: '84', credit: '2.0', gpa: '3.3', creditGpa: '6.60', study: '初修', minor: '主修' },
-  { code: '03010001', title: '微积分（上）', module: '学科专业类基础课', nature: '必修', score: '93.9', credit: '3.0', gpa: '3.9', creditGpa: '11.70', study: '初修', minor: '主修' },
-  { code: '99010123', title: '大学生心理健康（网络通识课-雨花）', module: '素养教育课', nature: '选修', score: '92.6', credit: '2.0', gpa: '3.9', creditGpa: '7.80', study: '初修', minor: '主修' },
-  { code: '13010114', title: '大学计算机', module: '公共必修课', nature: '必修', score: '87.68', credit: '2.0', gpa: '3.7', creditGpa: '7.40', study: '初修', minor: '主修' },
-])
+const raw2023Fall: RawCourse[] = [
+  { code: '0201042', title: '中华民族共同体概论', module: '公共必修课', nature: '必修', score: 92.7, credit: 2.0, gpa: 3.9, creditGpa: 7.8, study: '初修', minor: '主修' },
+  { code: '0301023', title: '大学生职业发展规划', module: '学科专业类基础课', nature: '必修', score: 85.2, credit: 1.0, gpa: 3.7, creditGpa: 3.7, study: '初修', minor: '主修' },
+  { code: '0301036', title: '管理学原理', module: '专业选修课', nature: '选修', score: 74, credit: 2.0, gpa: 2.3, creditGpa: 4.6, study: '初修', minor: '主修' },
+  { code: '0301055', title: '会计学', module: '专业基础课', nature: '必修', score: 76.65, credit: 3.0, gpa: 2.7, creditGpa: 8.1, study: '初修', minor: '主修' },
+  { code: '0301134', title: '政治经济学', module: '专业基础课', nature: '必修', score: 92.6, credit: 4.0, gpa: 3.9, creditGpa: 15.6, study: '初修', minor: '主修' },
+  { code: '1001287', title: '大学英语1（读写译）', module: '公共必修课', nature: '必修', score: 74.67, credit: 2.0, gpa: 2.3, creditGpa: 4.6, study: '初修', minor: '主修' },
+  { code: '1001288', title: '大学英语1（视听说）', module: '公共必修课', nature: '必修', score: 84.86, credit: 2.0, gpa: 3.3, creditGpa: 6.6, study: '初修', minor: '主修' },
+  { code: '0701220', title: '公共体育1', module: '公共必修课', nature: '必修', score: 91.3, credit: 1.0, gpa: 3.9, creditGpa: 3.9, study: '初修', minor: '主修' },
+  { code: '9901001', title: '国防教育及军事训练', module: '素养教育课', nature: '选修', score: 84, credit: 2.0, gpa: 3.3, creditGpa: 6.6, study: '初修', minor: '主修' },
+  { code: '03010001', title: '微积分（上）', module: '学科专业类基础课', nature: '必修', score: 93.9, credit: 3.0, gpa: 3.9, creditGpa: 11.7, study: '初修', minor: '主修' },
+  { code: '99010123', title: '大学生心理健康（网络通识课-雨花）', module: '素养教育课', nature: '选修', score: 92.6, credit: 2.0, gpa: 3.9, creditGpa: 7.8, study: '初修', minor: '主修' },
+  { code: '13010114', title: '大学计算机', module: '公共必修课', nature: '必修', score: 87.68, credit: 2.0, gpa: 3.7, creditGpa: 7.4, study: '初修', minor: '主修' },
+]
 
-const semester2023Spring = mapCourses([
-  { code: '0201046', title: '思想道德与法治', module: '公共必修课', nature: '必修', score: '83.5', credit: '3.0', gpa: '3.3', creditGpa: '9.90', study: '初修', minor: '主修' },
-  { code: '0301024', title: '当代中国经济', module: '学科专业类基础课', nature: '必修', score: '77.25', credit: '2.0', gpa: '2.7', creditGpa: '5.40', study: '初修', minor: '主修' },
-  { code: '0301025', title: '电子商务与现代物流', module: '专业选修课', nature: '选修', score: '88', credit: '2.0', gpa: '3.7', creditGpa: '7.40', study: '初修', minor: '主修' },
-  { code: '0301098', title: '市场营销', module: '专业选修课', nature: '选修', score: '87.5', credit: '2.0', gpa: '3.7', creditGpa: '7.40', study: '初修', minor: '主修' },
-  { code: '0301115', title: '微观经济学', module: '专业基础课', nature: '必修', score: '81.7', credit: '3.0', gpa: '3.0', creditGpa: '9.00', study: '初修', minor: '主修' },
-  { code: '1001289', title: '大学英语2（读写译）', module: '公共必修课', nature: '必修', score: '75.46', credit: '2.0', gpa: '2.7', creditGpa: '5.40', study: '初修', minor: '主修' },
-  { code: '1001290', title: '大学英语2（视听说）', module: '公共必修课', nature: '必修', score: '87.46', credit: '2.0', gpa: '3.7', creditGpa: '7.40', study: '初修', minor: '主修' },
-  { code: '0701223', title: '公共体育2', module: '公共必修课', nature: '必修', score: '88.6', credit: '1.0', gpa: '3.7', creditGpa: '3.70', study: '初修', minor: '主修' },
-  { code: '9901122', title: '食全·食美（网络通识课-雨花）', module: '素养教育课', nature: '选修', score: '96.4', credit: '2.0', gpa: '4.0', creditGpa: '8.00', study: '初修', minor: '主修' },
-  { code: '9901123', title: '餐桌上的奇妙世界（网络通识课-雨花）', module: '素养教育课', nature: '选修', score: '95.95', credit: '2.0', gpa: '4.0', creditGpa: '8.00', study: '初修', minor: '主修' },
-  { code: '03010002', title: '微积分（下）', module: '学科专业类基础课', nature: '必修', score: '86.9', credit: '3.0', gpa: '3.7', creditGpa: '11.10', study: '初修', minor: '主修' },
-])
+const raw2023Spring: RawCourse[] = [
+  { code: '0201046', title: '思想道德与法治', module: '公共必修课', nature: '必修', score: 83.5, credit: 3.0, gpa: 3.3, creditGpa: 9.9, study: '初修', minor: '主修' },
+  { code: '0301024', title: '当代中国经济', module: '学科专业类基础课', nature: '必修', score: 77.25, credit: 2.0, gpa: 2.7, creditGpa: 5.4, study: '初修', minor: '主修' },
+  { code: '0301025', title: '电子商务与现代物流', module: '专业选修课', nature: '选修', score: 88, credit: 2.0, gpa: 3.7, creditGpa: 7.4, study: '初修', minor: '主修' },
+  { code: '0301098', title: '市场营销', module: '专业选修课', nature: '选修', score: 87.5, credit: 2.0, gpa: 3.7, creditGpa: 7.4, study: '初修', minor: '主修' },
+  { code: '0301115', title: '微观经济学', module: '专业基础课', nature: '必修', score: 81.7, credit: 3.0, gpa: 3.0, creditGpa: 9.0, study: '初修', minor: '主修' },
+  { code: '1001289', title: '大学英语2（读写译）', module: '公共必修课', nature: '必修', score: 75.46, credit: 2.0, gpa: 2.7, creditGpa: 5.4, study: '初修', minor: '主修' },
+  { code: '1001290', title: '大学英语2（视听说）', module: '公共必修课', nature: '必修', score: 87.46, credit: 2.0, gpa: 3.7, creditGpa: 7.4, study: '初修', minor: '主修' },
+  { code: '0701223', title: '公共体育2', module: '公共必修课', nature: '必修', score: 88.6, credit: 1.0, gpa: 3.7, creditGpa: 3.7, study: '初修', minor: '主修' },
+  { code: '9901122', title: '食全·食美（网络通识课-雨花）', module: '素养教育课', nature: '选修', score: 96.4, credit: 2.0, gpa: 4.0, creditGpa: 8.0, study: '初修', minor: '主修' },
+  { code: '9901123', title: '餐桌上的奇妙世界（网络通识课-雨花）', module: '素养教育课', nature: '选修', score: 95.95, credit: 2.0, gpa: 4.0, creditGpa: 8.0, study: '初修', minor: '主修' },
+  { code: '03010002', title: '微积分（下）', module: '学科专业类基础课', nature: '必修', score: 86.9, credit: 3.0, gpa: 3.7, creditGpa: 11.1, study: '初修', minor: '主修' },
+]
 
-const semester2024Fall = mapCourses([
-  { code: '0201047', title: '中国近现代史纲要', module: '公共必修课', nature: '必修', score: '76.5', credit: '3.0', gpa: '2.7', creditGpa: '8.10', study: '初修', minor: '主修' },
-  { code: '0301054', title: '宏观经济学', module: '专业基础课', nature: '必修', score: '87.38', credit: '3.0', gpa: '3.7', creditGpa: '11.10', study: '初修', minor: '主修' },
-  { code: '0301095', title: '世界经济概论', module: '专业选修课', nature: '选修', score: '84.05', credit: '2.0', gpa: '3.3', creditGpa: '6.60', study: '初修', minor: '主修' },
-  { code: '0301110', title: '统计学', module: '专业基础课', nature: '必修', score: '89.1', credit: '3.0', gpa: '3.7', creditGpa: '11.10', study: '初修', minor: '主修' },
-  { code: '0301119', title: '线性代数', module: '学科专业类基础课', nature: '必修', score: '83.25', credit: '3.0', gpa: '3.3', creditGpa: '9.90', study: '初修', minor: '主修' },
-  { code: '1001291', title: '大学英语3', module: '公共必修课', nature: '必修', score: '79.58', credit: '2.0', gpa: '3.0', creditGpa: '6.00', study: '初修', minor: '主修' },
-  { code: '0701226', title: '公共体育3', module: '公共必修课', nature: '必修', score: '90.1', credit: '1.0', gpa: '3.9', creditGpa: '3.90', study: '初修', minor: '主修' },
-  { code: '0201051', title: '形势与政策3', module: '选修', nature: '选修', score: '94.27', credit: '0.0', gpa: '4.0', creditGpa: '0.00', study: '初修', minor: '主修' },
-  { code: '9901086', title: '爱情心理学（通）', module: '素养教育课', nature: '选修', score: '93', credit: '2.0', gpa: '3.9', creditGpa: '7.80', study: '初修', minor: '主修' },
-  { code: '99010566', title: '幸福在哪里（网络通识课-雨花）', module: '素养教育课', nature: '选修', score: '98', credit: '2.0', gpa: '4.0', creditGpa: '8.00', study: '初修', minor: '主修' },
-  { code: '03010054', title: '资本论（选读）', module: '专业基础课', nature: '必修', score: '78.9', credit: '3.0', gpa: '3.0', creditGpa: '9.00', study: '初修', minor: '主修' },
-])
+const raw2024Fall: RawCourse[] = [
+  { code: '0201047', title: '中国近现代史纲要', module: '公共必修课', nature: '必修', score: 76.5, credit: 3.0, gpa: 2.7, creditGpa: 8.1, study: '初修', minor: '主修' },
+  { code: '0301054', title: '宏观经济学', module: '专业基础课', nature: '必修', score: 87.38, credit: 3.0, gpa: 3.7, creditGpa: 11.1, study: '初修', minor: '主修' },
+  { code: '0301095', title: '世界经济概论', module: '专业选修课', nature: '选修', score: 84.05, credit: 2.0, gpa: 3.3, creditGpa: 6.6, study: '初修', minor: '主修' },
+  { code: '0301110', title: '统计学', module: '专业基础课', nature: '必修', score: 89.1, credit: 3.0, gpa: 3.7, creditGpa: 11.1, study: '初修', minor: '主修' },
+  { code: '0301119', title: '线性代数', module: '学科专业类基础课', nature: '必修', score: 83.25, credit: 3.0, gpa: 3.3, creditGpa: 9.9, study: '初修', minor: '主修' },
+  { code: '1001291', title: '大学英语3', module: '公共必修课', nature: '必修', score: 79.58, credit: 2.0, gpa: 3.0, creditGpa: 6.0, study: '初修', minor: '主修' },
+  { code: '0701226', title: '公共体育3', module: '公共必修课', nature: '必修', score: 90.1, credit: 1.0, gpa: 3.9, creditGpa: 3.9, study: '初修', minor: '主修' },
+  { code: '0201051', title: '形势与政策3', module: '选修', nature: '选修', score: 94.27, credit: 0.0, gpa: 4.0, creditGpa: 0.0, study: '初修', minor: '主修' },
+  { code: '9901086', title: '爱情心理学（通）', module: '素养教育课', nature: '选修', score: 93, credit: 2.0, gpa: 3.9, creditGpa: 7.8, study: '初修', minor: '主修' },
+  { code: '99010566', title: '幸福在哪里（网络通识课-雨花）', module: '素养教育课', nature: '选修', score: 98, credit: 2.0, gpa: 4.0, creditGpa: 8.0, study: '初修', minor: '主修' },
+  { code: '03010054', title: '资本论（选读）', module: '专业基础课', nature: '必修', score: 78.9, credit: 3.0, gpa: 3.0, creditGpa: 9.0, study: '初修', minor: '主修' },
+]
 
-const semester2025Spring = mapCourses([
-  { code: '0201041', title: '马克思主义基本原理', module: '公共必修课', nature: '必修', score: '78.5', credit: '3.0', gpa: '3.0', creditGpa: '9.00', study: '初修', minor: '主修' },
-  { code: '0301012', title: '财务管理', module: '专业选修课', nature: '选修', score: '70', credit: '2.0', gpa: '2.0', creditGpa: '4.00', study: '初修', minor: '主修' },
-  { code: '0301027', title: '发展经济学', module: '专业基础课', nature: '必修', score: '80.8', credit: '3.0', gpa: '3.0', creditGpa: '9.00', study: '初修', minor: '主修' },
-  { code: '0301031', title: '概率论与数理统计', module: '学科专业类基础课', nature: '必修', score: '93.48', credit: '3.0', gpa: '3.9', creditGpa: '11.70', study: '初修', minor: '主修' },
-  { code: '0301040', title: '国际经济学（双语）', module: '专业选修课', nature: '选修', score: '82.5', credit: '3.0', gpa: '3.3', creditGpa: '9.90', study: '初修', minor: '主修' },
-  { code: '0301066', title: '金融学', module: '专业基础课', nature: '必修', score: '78.45', credit: '3.0', gpa: '3.0', creditGpa: '9.00', study: '初修', minor: '主修' },
-  { code: '0301088', title: '人力资源管理', module: '专业选修课', nature: '选修', score: '87.6', credit: '2.0', gpa: '3.7', creditGpa: '7.40', study: '初修', minor: '主修' },
-  { code: '1001292', title: '大学英语4', module: '公共必修课', nature: '必修', score: '84.17', credit: '2.0', gpa: '3.3', creditGpa: '6.60', study: '初修', minor: '主修' },
-  { code: '0701229', title: '公共体育4', module: '公共必修课', nature: '必修', score: '96.15', credit: '1.0', gpa: '4.0', creditGpa: '4.00', study: '初修', minor: '主修' },
-  { code: '0201052', title: '形势与政策4', module: '选修', nature: '选修', score: '95.33', credit: '0.0', gpa: '4.0', creditGpa: '0.00', study: '初修', minor: '主修' },
-  { code: '03010058', title: '经济思想史', module: '专业基础课', nature: '必修', score: '82.8', credit: '3.0', gpa: '3.3', creditGpa: '9.90', study: '初修', minor: '主修' },
-  { code: '02010028', title: '毛泽东思想和中国特色社会主义理论体系概论', module: '公共必修课', nature: '必修', score: '83.5', credit: '3.0', gpa: '3.3', creditGpa: '9.90', study: '初修', minor: '主修' },
-  { code: '99011002', title: '声乐演唱（网络通识课-雨花）', module: '素养教育课', nature: '选修', score: '91.6', credit: '2.0', gpa: '3.9', creditGpa: '7.80', study: '初修', minor: '主修' },
-])
+const raw2025Spring: RawCourse[] = [
+  { code: '0201041', title: '马克思主义基本原理', module: '公共必修课', nature: '必修', score: 78.5, credit: 3.0, gpa: 3.0, creditGpa: 9.0, study: '初修', minor: '主修' },
+  { code: '0301012', title: '财务管理', module: '专业选修课', nature: '选修', score: 70, credit: 2.0, gpa: 2.0, creditGpa: 4.0, study: '初修', minor: '主修' },
+  { code: '0301027', title: '发展经济学', module: '专业基础课', nature: '必修', score: 80.8, credit: 3.0, gpa: 3.0, creditGpa: 9.0, study: '初修', minor: '主修' },
+  { code: '0301031', title: '概率论与数理统计', module: '学科专业类基础课', nature: '必修', score: 93.48, credit: 3.0, gpa: 3.9, creditGpa: 11.7, study: '初修', minor: '主修' },
+  { code: '0301040', title: '国际经济学（双语）', module: '专业选修课', nature: '选修', score: 82.5, credit: 3.0, gpa: 3.3, creditGpa: 9.9, study: '初修', minor: '主修' },
+  { code: '0301066', title: '金融学', module: '专业基础课', nature: '必修', score: 78.45, credit: 3.0, gpa: 3.0, creditGpa: 9.0, study: '初修', minor: '主修' },
+  { code: '0301088', title: '人力资源管理', module: '专业选修课', nature: '选修', score: 87.6, credit: 2.0, gpa: 3.7, creditGpa: 7.4, study: '初修', minor: '主修' },
+  { code: '1001292', title: '大学英语4', module: '公共必修课', nature: '必修', score: 84.17, credit: 2.0, gpa: 3.3, creditGpa: 6.6, study: '初修', minor: '主修' },
+  { code: '0701229', title: '公共体育4', module: '公共必修课', nature: '必修', score: 96.15, credit: 1.0, gpa: 4.0, creditGpa: 4.0, study: '初修', minor: '主修' },
+  { code: '0201052', title: '形势与政策4', module: '选修', nature: '选修', score: 95.33, credit: 0.0, gpa: 4.0, creditGpa: 0.0, study: '初修', minor: '主修' },
+  { code: '03010058', title: '经济思想史', module: '专业基础课', nature: '必修', score: 82.8, credit: 3.0, gpa: 3.3, creditGpa: 9.9, study: '初修', minor: '主修' },
+  { code: '02010028', title: '毛泽东思想和中国特色社会主义理论体系概论', module: '公共必修课', nature: '必修', score: 83.5, credit: 3.0, gpa: 3.3, creditGpa: 9.9, study: '初修', minor: '主修' },
+  { code: '99011002', title: '声乐演唱（网络通识课-雨花）', module: '素养教育课', nature: '选修', score: 91.6, credit: 2.0, gpa: 3.9, creditGpa: 7.8, study: '初修', minor: '主修' },
+]
 
-const semester2025Fall = mapCourses([
-  { code: '0301038', title: '国际金融学', module: '专业选修课', nature: '选修', score: '85.8', credit: '2.0', gpa: '3.7', creditGpa: '7.40', study: '初修', minor: '主修' },
-  { code: '0301043', title: '国际贸易学（双语）', module: '专业选修课', nature: '选修', score: '93.5', credit: '2.0', gpa: '3.9', creditGpa: '7.80', study: '初修', minor: '主修' },
-  { code: '0301062', title: '计量经济学', module: '专业基础课', nature: '必修', score: '88.8', credit: '3.0', gpa: '3.7', creditGpa: '11.10', study: '初修', minor: '主修' },
-  { code: '0301068', title: '经济法', module: '专业选修课', nature: '选修', score: '94.5', credit: '2.0', gpa: '4.0', creditGpa: '8.00', study: '初修', minor: '主修' },
-  { code: '0301079', title: '劳动经济学', module: '专业选修课', nature: '选修', score: '85.1', credit: '2.0', gpa: '3.7', creditGpa: '7.40', study: '初修', minor: '主修' },
-  { code: '0201053', title: '形势与政策5', module: '选修', nature: '选修', score: '98.75', credit: '0.0', gpa: '4.0', creditGpa: '0.00', study: '初修', minor: '主修' },
-  { code: '03010038', title: '计量经济学实训', module: '综合实践', nature: '必修', score: '93', credit: '1.0', gpa: '3.9', creditGpa: '3.90', study: '初修', minor: '主修' },
-  { code: '02010025', title: '习近平新时代中国特色社会主义思想概论', module: '公共必修课', nature: '必修', score: '85.25', credit: '3.0', gpa: '3.7', creditGpa: '11.10', study: '初修', minor: '主修' },
-])
+const raw2025Fall: RawCourse[] = [
+  { code: '0301038', title: '国际金融学', module: '专业选修课', nature: '选修', score: 85.8, credit: 2.0, gpa: 3.7, creditGpa: 7.4, study: '初修', minor: '主修' },
+  { code: '0301043', title: '国际贸易学（双语）', module: '专业选修课', nature: '选修', score: 93.5, credit: 2.0, gpa: 3.9, creditGpa: 7.8, study: '初修', minor: '主修' },
+  { code: '0301062', title: '计量经济学', module: '专业基础课', nature: '必修', score: 88.8, credit: 3.0, gpa: 3.7, creditGpa: 11.1, study: '初修', minor: '主修' },
+  { code: '0301068', title: '经济法', module: '专业选修课', nature: '选修', score: 94.5, credit: 2.0, gpa: 4.0, creditGpa: 8.0, study: '初修', minor: '主修' },
+  { code: '0301079', title: '劳动经济学', module: '专业选修课', nature: '选修', score: 85.1, credit: 2.0, gpa: 3.7, creditGpa: 7.4, study: '初修', minor: '主修' },
+  { code: '0201053', title: '形势与政策5', module: '选修', nature: '选修', score: 98.75, credit: 0.0, gpa: 4.0, creditGpa: 0.0, study: '初修', minor: '主修' },
+  { code: '03010038', title: '计量经济学实训', module: '综合实践', nature: '必修', score: 93, credit: 1.0, gpa: 3.9, creditGpa: 3.9, study: '初修', minor: '主修' },
+  { code: '02010025', title: '习近平新时代中国特色社会主义思想概论', module: '公共必修课', nature: '必修', score: 85.25, credit: 3.0, gpa: 3.7, creditGpa: 11.1, study: '初修', minor: '主修' },
+]
+
+const semester2023Fall = mapCourses(raw2023Fall)
+const semester2023Spring = mapCourses(raw2023Spring)
+const semester2024Fall = mapCourses(raw2024Fall)
+const semester2025Spring = mapCourses(raw2025Spring)
+const semester2025Fall = mapCourses(raw2025Fall)
 
 // Headings and sections
 export const projectHeadLine: LocalizedString = { en: 'Course Grades', zh: '课程成绩' }
 export const projectIntro: LocalizedString = { en: 'Five semesters of undergraduate grades, grouped by term.', zh: '本科五个学期的课程成绩，按学期划分展示。' }
 
 export const projectSections: Array<ProjectSectionType> = [
-  { title: { en: '2023-2024 Fall', zh: '2023-2024（上）' }, items: semester2023Fall },
-  { title: { en: '2023-2024 Spring', zh: '2023-2024（下）' }, items: semester2023Spring },
-  { title: { en: '2024-2025 Fall', zh: '2024-2025（上）' }, items: semester2024Fall },
-  { title: { en: '2024-2025 Spring', zh: '2024-2025（下）' }, items: semester2025Spring },
   { title: { en: '2025-2026 Fall', zh: '2025-2026（上）' }, items: semester2025Fall },
+  { title: { en: '2024-2025 Spring', zh: '2024-2025（下）' }, items: semester2025Spring },
+  { title: { en: '2024-2025 Fall', zh: '2024-2025（上）' }, items: semester2024Fall },
+  { title: { en: '2023-2024 Spring', zh: '2023-2024（下）' }, items: semester2023Spring },
+  { title: { en: '2023-2024 Fall', zh: '2023-2024（上）' }, items: semester2023Fall },
 ]
 
 export const projects: Array<ProjectItemType> = projectSections.flatMap((section) => section.items)
+
+// GPA stats
+export const semesterGpa: number[] = [
+  weightedGpa(raw2025Fall),
+  weightedGpa(raw2025Spring),
+  weightedGpa(raw2024Fall),
+  weightedGpa(raw2023Spring),
+  weightedGpa(raw2023Fall),
+]
+export const overallGpa: number = weightedGpa([
+  ...raw2025Fall,
+  ...raw2025Spring,
+  ...raw2024Fall,
+  ...raw2023Spring,
+  ...raw2023Fall,
+])
 
 // Interests & skills
 export const activitiesHeadLine: LocalizedString = { en: 'Interests & Skills', zh: '兴趣与技能' }

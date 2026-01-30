@@ -1,7 +1,7 @@
 import { type Metadata } from 'next'
 import { cookies } from 'next/headers'
 import { SimpleLayout } from '@/components/layout/SimpleLayout'
-import { projectHeadLine, projectIntro, projectSections } from '@/config/infoConfig'
+import { projectHeadLine, projectIntro, projectSections, semesterGpa, overallGpa } from '@/config/infoConfig'
 import { activities } from '@/config/projects'
 import { ProjectCard } from '@/components/project/ProjectCard'
 import { ActivityCard } from '@/components/home/ActivityCard'
@@ -22,11 +22,17 @@ export default function Projects() {
       title={selectText(projectHeadLine, locale)}
       intro={selectText(projectIntro, locale)}
     >
+      <div className="mb-6 inline-flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-2 text-sm font-semibold text-primary">
+        {locale === 'zh' ? '总加权绩点' : 'Overall GPA'}: {overallGpa.toFixed(2)}
+      </div>
       <div className="space-y-12 pb-10">
-        {projectSections.map((section) => (
+        {projectSections.map((section, idx) => (
           <section key={section.title.en} className="space-y-6">
-            <h2 className="text-lg font-semibold tracking-tight md:text-xl opacity-80">
+            <h2 className="flex items-center gap-3 text-lg font-semibold tracking-tight md:text-xl opacity-80">
               {selectText(section.title, locale)}
+              <span className="rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
+                {locale === 'zh' ? '学期均绩' : 'GPA'} {semesterGpa[idx]?.toFixed(2) ?? '--'}
+              </span>
             </h2>
             <ul
               role="list"

@@ -8,7 +8,7 @@ import { BlogCard } from '@/components/home/BlogCard'
 import { getAllBlogs, type BlogType } from '@/lib/blogs'
 import { ProjectCard } from '@/components/project/ProjectCard'
 import { ActivityCard } from '@/components/home/ActivityCard'
-import { projectHeadLine, projectIntro, projectSections, blogHeadLine, blogIntro, techIcons } from '@/config/infoConfig'
+import { projectHeadLine, projectIntro, projectSections, blogHeadLine, blogIntro, techIcons, semesterGpa, overallGpa } from '@/config/infoConfig'
 import { awards, awardsHeadLine, awardsIntro, activities, activitiesHeadLine, activitiesIntro } from '@/config/projects'
 import IconCloud from "@/components/ui/icon-cloud"
 import { Award, Briefcase, Heart } from 'lucide-react'
@@ -67,11 +67,17 @@ export default async function Home() {
           <p className="text-base text-muted-foreground max-w-2xl mb-8">
             {selectText(projectIntro, locale)}
           </p>
+          <div className="inline-flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-2 text-sm font-semibold text-primary mb-4">
+            {locale === 'zh' ? '总加权绩点' : 'Overall GPA'}: {overallGpa.toFixed(2)}
+          </div>
           <div className="space-y-10">
-            {projectSections.map((section) => (
+            {projectSections.map((section, idx) => (
               <div key={section.title.en}>
-                <h3 className="text-lg font-semibold tracking-tight md:text-xl opacity-80 mb-4">
+                <h3 className="flex items-center gap-3 text-lg font-semibold tracking-tight md:text-xl opacity-80 mb-4">
                   {selectText(section.title, locale)}
+                  <span className="rounded-full bg-muted px-3 py-1 text-xs font-semibold text-muted-foreground">
+                    {locale === 'zh' ? '学期均绩' : 'GPA'} {semesterGpa[idx]?.toFixed(2) ?? '--'}
+                  </span>
                 </h3>
                 <ul
                   role="list"

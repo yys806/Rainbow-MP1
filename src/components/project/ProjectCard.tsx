@@ -63,8 +63,9 @@ export function ProjectCard({ project, titleAs }: { project: ProjectItemType, ti
                   key={index}
                   className="flex items-center justify-center space-x-0.5 group"
                 >
-                  <HashIcon className="w-3 h-3 text-muted-foreground icon-scale" />
-                  <span className="text-xs text-muted-foreground tracking-tighter">
+                  <span
+                    className={`text-xs tracking-tighter ${index === 0 ? 'text-primary font-semibold' : 'text-muted-foreground'}`}
+                  >
                     {selectText(tag, locale)}
                   </span>
                 </div>
