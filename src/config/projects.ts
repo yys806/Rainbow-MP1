@@ -25,6 +25,7 @@ export type ProjectSectionType = {
 type RawCourse = {
   code: string
   title: string
+  englishTitle?: string
   module: string
   nature: string
   score: number
@@ -36,17 +37,75 @@ type RawCourse = {
   remark?: string
 }
 
+const courseEnTitles: Record<string, string> = {
+  '0201042': 'Introduction to the Community of the Chinese Nation',
+  '0301023': 'College Career Development Planning',
+  '0301036': 'Principles of Management',
+  '0301055': 'Accounting',
+  '0301134': 'Political Economy',
+  '1001287': 'College English 1 (Reading/Writing/Translation)',
+  '1001288': 'College English 1 (Listening & Speaking)',
+  '0701220': 'Physical Education 1',
+  '9901001': 'National Defense Education & Military Training',
+  '03010001': 'Calculus I',
+  '99010123': 'College Student Mental Health (Online GE)',
+  '13010114': 'College Computer Science',
+  '0201046': 'Ideology, Morality and Rule of Law',
+  '0301024': 'Contemporary Chinese Economy',
+  '0301025': 'E-commerce and Modern Logistics',
+  '0301098': 'Marketing',
+  '0301115': 'Microeconomics',
+  '1001289': 'College English 2 (Reading/Writing/Translation)',
+  '1001290': 'College English 2 (Listening & Speaking)',
+  '0701223': 'Physical Education 2',
+  '9901122': 'Food and Health (Online GE)',
+  '9901123': 'Amazing World on the Dining Table (Online GE)',
+  '03010002': 'Calculus II',
+  '0201047': 'Outline of Modern Chinese History',
+  '0301054': 'Macroeconomics',
+  '0301095': 'Introduction to World Economy',
+  '0301110': 'Statistics',
+  '0301119': 'Linear Algebra',
+  '1001291': 'College English 3',
+  '0701226': 'Physical Education 3',
+  '0201051': 'Situation & Policy 3',
+  '9901086': 'Psychology of Love',
+  '99010566': 'Where is Happiness (Online GE)',
+  '03010054': 'Capital (Selected Readings)',
+  '0201041': 'Basic Principles of Marxism',
+  '0301012': 'Financial Management',
+  '0301027': 'Development Economics',
+  '0301031': 'Probability Theory & Mathematical Statistics',
+  '0301040': 'International Economics (Bilingual)',
+  '0301066': 'Finance',
+  '0301088': 'Human Resource Management',
+  '1001292': 'College English 4',
+  '0701229': 'Physical Education 4',
+  '0201052': 'Situation & Policy 4',
+  '03010058': 'History of Economic Thought',
+  '02010028': 'Mao Zedong Thought and the Chinese Socialist System',
+  '99011002': 'Vocal Performance (Online GE)',
+  '0301038': 'International Finance',
+  '0301043': 'International Trade (Bilingual)',
+  '0301062': 'Econometrics',
+  '0301068': 'Economic Law',
+  '0301079': 'Labor Economics',
+  '0201053': 'Situation & Policy 5',
+  '03010038': 'Econometrics Practicum',
+  '02010025': 'Intro to Xi Jinping Thought on Socialism with Chinese Characteristics for a New Era',
+}
+
 const makeCourse = (course: RawCourse): ProjectItemType => ({
-  name: { en: `[${course.code}] ${course.title}`, zh: `[${course.code}] ${course.title}` },
+  name: { en: `[${course.code}] ${courseEnTitles[course.code] ?? course.title}`, zh: `[${course.code}] ${course.title}` },
   description: {
-    en: `模块：${course.module} | 性质：${course.nature} | 修读性质：${course.study} | 辅修标记：${course.minor}${course.remark ? ` | 备注：${course.remark}` : ''}`,
+    en: `Module: ${course.module} | Nature: ${course.nature} | Study type: ${course.study} | Minor: ${course.minor}${course.remark ? ` | Note: ${course.remark}` : ''}`,
     zh: `模块：${course.module} | 性质：${course.nature} | 修读性质：${course.study} | 辅修标记：${course.minor}${course.remark ? ` | 备注：${course.remark}` : ''}`,
   },
   tags: [
-    { en: `绩点 ${course.gpa.toFixed(2)}`, zh: `绩点 ${course.gpa.toFixed(2)}` },
-    { en: `成绩 ${course.score}`, zh: `成绩 ${course.score}` },
-    { en: `学分 ${course.credit}`, zh: `学分 ${course.credit}` },
-    { en: `学分绩点 ${course.creditGpa.toFixed(2)}`, zh: `学分绩点 ${course.creditGpa.toFixed(2)}` },
+    { en: `GPA ${course.gpa.toFixed(2)}`, zh: `绩点 ${course.gpa.toFixed(2)}` },
+    { en: `Score ${course.score}`, zh: `成绩 ${course.score}` },
+    { en: `Credits ${course.credit}`, zh: `学分 ${course.credit}` },
+    { en: `Credit GPA ${course.creditGpa.toFixed(2)}`, zh: `学分绩点 ${course.creditGpa.toFixed(2)}` },
   ],
   icon: '/images/1.png',
 })

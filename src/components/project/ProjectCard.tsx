@@ -33,7 +33,7 @@ export function ProjectCard({ project, titleAs }: { project: ProjectItemType, ti
               {project.icon ? (
                 <Image
                   src={project.icon}
-                  alt={`${project.name} icon`}
+                  alt={`${selectText(project.name, locale)} icon`}
                   width={48}
                   height={48}
                   className="h-12 w-12 rounded-full object-cover"
