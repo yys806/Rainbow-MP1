@@ -11,7 +11,7 @@ export const introduction: LocalizedString = {
   en: "Hi, I'm Zhu Caihong from Baoshan, Yunnan. I'm an Economics undergraduate at Yunnan Minzu University, enrolled in 2023.",
   zh: '你好，我是朱彩虹，来自云南保山，2023 年入学云南民族大学经济学本科。',
 }
-export const email = '3492675568@qq.com'
+export const email = '3314108712@qq.com'
 export const githubUsername = 'yys806'
 
 // about page
