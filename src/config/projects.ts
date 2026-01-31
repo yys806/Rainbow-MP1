@@ -128,6 +128,12 @@ export const awardsHeadLine: LocalizedString = { en: 'Awards & Honors', zh: '奖
 export const awardsIntro: LocalizedString = { en: 'Scholarships received during undergraduate study.', zh: '本科阶段获得的奖学金。' }
 export const awards: Array<ActivityItemType> = [
   {
+    name: { en: 'Mandarin Proficiency Test (Level 2-A)', zh: '普通话二级甲等' },
+    description: { en: 'Certified Mandarin 2-A level.', zh: '普通话水平测试二级甲等证书。' },
+    date: { en: '2025', zh: '2025' },
+    location: { en: 'Yunnan', zh: '云南' },
+  },
+  {
     name: { en: 'Long Shengwen Scholarship', zh: '龙绳文奖学金' },
     description: { en: 'Scholarship awarded for academic excellence.', zh: '以学业表现获得的奖学金。' },
     date: { en: '2025', zh: '2025' },
@@ -135,7 +141,7 @@ export const awards: Array<ActivityItemType> = [
   },
   {
     name: { en: 'University-level Scholarship', zh: '校级奖学金' },
-    description: { en: 'University scholarship for outstanding performance.', zh: '因综合表现优异获得的校级奖学金。' },
+    description: { en: '￥1000,University scholarship for outstanding performance.', zh: '1000元，因综合表现优异获得的校级三等奖学金。' },
     date: { en: '2025.12', zh: '2025.12' },
     location: { en: 'Yunnan', zh: '云南' },
   },
@@ -219,7 +225,7 @@ const semester2025Spring = mapCourses(raw2025Spring)
 const semester2025Fall = mapCourses(raw2025Fall)
 
 // Headings and sections
-export const projectHeadLine: LocalizedString = { en: 'Course Grades', zh: '课程成绩' }
+export const projectHeadLine: LocalizedString = { en: 'Grades', zh: '成绩' }
 export const projectIntro: LocalizedString = { en: 'Five semesters of undergraduate grades, grouped by term.', zh: '本科五个学期的课程成绩，按学期划分展示。' }
 
 export const projectSections: Array<ProjectSectionType> = [
@@ -266,8 +272,8 @@ export const activities: Array<ActivityItemType> = [
   },
   {
     name: { en: 'Styling & Makeup', zh: '妆造' },
-    description: { en: 'Exploring stage and photo-shoot styling techniques.', zh: '舞台与拍摄妆造的学习与实践。' },
+    description: { en: 'Self-learning', zh: '自学' },
     date: { en: 'Long-term', zh: '长期' },
-    location: { en: 'Studio & campus events', zh: '工作室与校园活动' },
+    location: { en: 'School', zh: '学校' },
   },
 ]
