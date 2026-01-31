@@ -9,7 +9,7 @@ import { Calendar } from 'lucide-react'
 import { Locale, defaultLocale, selectText } from '@/lib/i18n'
 
 export const metadata: Metadata = {
-  title: 'Course Grades',
+  title: 'Score',
   description: selectText(projectIntro, 'en'),
 }
 

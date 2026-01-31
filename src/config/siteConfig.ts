@@ -11,7 +11,7 @@ export type NavItemType = {
 
 const navHome: LocalizedString = { en: 'Home', zh: '首页' }
 const navAbout: LocalizedString = { en: 'About', zh: '关于' }
-const navProjects: LocalizedString = { en: 'Course Grades', zh: '课程成绩' }
+const navProjects: LocalizedString = { en: 'Score', zh: '成绩' }
 const navBlogs: LocalizedString = { en: 'Blogs', zh: '博客' }
 
 export const footerItems: Array<NavItemType> = [

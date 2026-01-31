@@ -57,6 +57,35 @@
       --chart-4: 280 65% 60%;
       --chart-5: 340 75% 55%;
     }
+
+    /* Bishoujo (pink) theme */
+    .bishoujo {
+      --background: 330 50% 98%;          /* 淡粉底 */
+      --foreground: 330 15% 20%;
+      --card: 330 55% 97%;
+      --card-foreground: 330 20% 18%;
+      --popover: 330 50% 98%;
+      --popover-foreground: 330 20% 18%;
+      --primary: 330 70% 60%;             /* 主粉色 */
+      --primary-foreground: 0 0% 100%;
+      --secondary: 330 35% 90%;
+      --secondary-foreground: 330 25% 28%;
+      --muted: 330 35% 92%;
+      --muted-foreground: 330 15% 40%;
+      --accent: 330 60% 85%;
+      --accent-foreground: 330 25% 25%;
+      --destructive: 0 70% 55%;
+      --destructive-foreground: 0 0% 98%;
+      --border: 330 25% 88%;
+      --input: 330 25% 88%;
+      --ring: 330 70% 60%;
+      --radius: 0.9rem;
+      --chart-1: 330 70% 60%;
+      --chart-2: 340 75% 65%;
+      --chart-3: 10 80% 65%;
+      --chart-4: 280 55% 65%;
+      --chart-5: 200 55% 65%;
+    }
   }
   
 @layer base {
