@@ -80,7 +80,7 @@ export function Providers({
   return (
     <AppContext.Provider value={{ previousPathname }}>
       <LanguageContext.Provider value={{ locale, toggleLocale, setLocale }}>
-        <ThemeProvider attribute="class" disableTransitionOnChange>
+        <ThemeProvider attribute="class" disableTransitionOnChange themes={['light','dark','bishoujo']}>
           <ThemeWatcher />
           {children}
         </ThemeProvider>
