@@ -93,5 +93,53 @@
   }
   body {
     @apply bg-background text-foreground;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Sakura falling effect (bishoujo only, layered behind content) */
+  .bishoujo body::before,
+  .bishoujo body::after {
+    content: '';
+    position: fixed;
+    top: -12vh;
+    left: 0;
+    width: 10px;
+    height: 14px;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.6) 0 35%, transparent 36%), #ffc1dc;
+    border-radius: 70% 50% 70% 50%;
+    pointer-events: none;
+    opacity: 0.45;
+    mix-blend-mode: screen;
+    z-index: -1;
+  }
+
+  .bishoujo body::before {
+    box-shadow:
+      12vw 4vh 0 0 #ffc1dc, 28vw -6vh 0 0 #ffd6e8, 46vw 8vh 0 0 #ffb3d4,
+      62vw -10vh 0 0 #ffc9e2, 78vw 6vh 0 0 #ffb3d4, 92vw -4vh 0 0 #ffd6e8,
+      18vw 20vh 0 0 #ffc1dc, 38vw 26vh 0 0 #ffd6e8, 58vw 18vh 0 0 #ffb3d4,
+      82vw 24vh 0 0 #ffc9e2;
+    animation: sakura-fall 18s linear infinite;
+  }
+
+  .bishoujo body::after {
+    width: 8px;
+    height: 12px;
+    box-shadow:
+      8vw -2vh 0 0 #ffd6e8, 24vw 6vh 0 0 #ffb3d4, 40vw -8vh 0 0 #ffc9e2,
+      56vw 2vh 0 0 #ffc1dc, 72vw -12vh 0 0 #ffd6e8, 88vw 10vh 0 0 #ffb3d4,
+      15vw 32vh 0 0 #ffc9e2, 45vw 36vh 0 0 #ffd6e8, 65vw 30vh 0 0 #ffc1dc,
+      90vw 34vh 0 0 #ffb3d4;
+    animation: sakura-fall 24s linear infinite reverse;
+  }
+}
+
+@keyframes sakura-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-25vw, 110vh, 0) rotate(360deg);
   }
 }
