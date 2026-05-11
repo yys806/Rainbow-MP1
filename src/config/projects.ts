@@ -133,16 +133,16 @@ export const awardsIntro: LocalizedString = {
 }
 export const awards: Array<ActivityItemType> = [
   {
-    name: { en: 'Mandarin Proficiency Test (Level 2-A)', zh: '普通话二级甲等' },
-    description: { en: 'Certified Mandarin 2-A level.', zh: '普通话水平测试二级甲等证书。' },
-    date: { en: '2025', zh: '2025' },
-    location: { en: 'Yunnan', zh: '云南' },
+    name: { en: 'National College Student Market Survey and Analysis Competition, University Third Prize', zh: '全国大学生市场调查与分析大赛校级三等奖' },
+    description: { en: 'University-level third prize in the National College Student Market Survey and Analysis Competition.', zh: '在全国大学生市场调查与分析大赛中获得校级三等奖。' },
+    date: { en: '2026', zh: '2026' },
+    location: { en: 'Yunnan Minzu University', zh: '云南民族大学' },
   },
   {
-    name: { en: 'Long Shengwen Scholarship', zh: '龙绳文奖学金' },
-    description: { en: 'Scholarship awarded for academic excellence.', zh: '以学业表现获得的奖学金。' },
-    date: { en: '2024', zh: '2024' },
-    location: { en: 'Yunnan', zh: '云南' },
+    name: { en: 'ICBC Cup, University-level Excellence Award', zh: '工行杯校级优秀奖' },
+    description: { en: 'University-level excellence award in the ICBC Cup competition.', zh: '在“工行杯”竞赛中获得校级优秀奖。' },
+    date: { en: '2026', zh: '2026' },
+    location: { en: 'Yunnan Minzu University', zh: '云南民族大学' },
   },
   {
     name: { en: 'University Third-class Scholarship', zh: '校级三等奖学金' },
@@ -151,28 +151,28 @@ export const awards: Array<ActivityItemType> = [
     location: { en: 'Yunnan Minzu University', zh: '云南民族大学' },
   },
   {
-    name: { en: 'Market Survey Competition, Third Prize', zh: '市场调查竞赛校级三等奖' },
-    description: { en: 'University-level third prize in the market survey competition.', zh: '市场调查相关竞赛校级三等奖。' },
+    name: { en: 'Mandarin Proficiency Test (Level 2-A)', zh: '普通话二级甲等' },
+    description: { en: 'Certified Mandarin 2-A level.', zh: '普通话水平测试二级甲等证书。' },
+    date: { en: '2025', zh: '2025' },
+    location: { en: 'Yunnan', zh: '云南' },
+  },
+  {
+    name: { en: 'National College Student Market Survey and Analysis Competition, University Third Prize', zh: '全国大学生市场调查与分析大赛校级三等奖' },
+    description: { en: 'University-level third prize in the National College Student Market Survey and Analysis Competition.', zh: '在全国大学生市场调查与分析大赛中获得校级三等奖。' },
     date: { en: '2025', zh: '2025' },
     location: { en: 'Yunnan Minzu University', zh: '云南民族大学' },
   },
   {
-    name: { en: 'Market Survey Competition, Third Prize', zh: '市场调查竞赛校级三等奖' },
-    description: { en: 'University-level third prize in the market survey competition.', zh: '市场调查相关竞赛校级三等奖。' },
-    date: { en: '2026', zh: '2026' },
-    location: { en: 'Yunnan Minzu University', zh: '云南民族大学' },
+    name: { en: 'Long Shengwen Scholarship', zh: '龙绳文奖学金' },
+    description: { en: 'Scholarship awarded for academic excellence.', zh: '以学业表现获得的奖学金。' },
+    date: { en: '2024', zh: '2024' },
+    location: { en: 'Yunnan', zh: '云南' },
   },
   {
     name: { en: 'National English Translation Contest, Provincial Third Prize', zh: '全国英语翻译大赛省级三等奖' },
     description: { en: 'Provincial third prize in the National English Translation Contest.', zh: '在全国英语翻译大赛中获得省级三等奖。' },
     date: { en: '2023', zh: '2023' },
     location: { en: 'Yunnan', zh: '云南' },
-  },
-  {
-    name: { en: 'ICBC Cup, University-level Excellence Award', zh: '工行杯校级优秀奖' },
-    description: { en: 'University-level excellence award in the ICBC Cup competition.', zh: '在“工行杯”竞赛中获得校级优秀奖。' },
-    date: { en: '2026', zh: '2026' },
-    location: { en: 'Yunnan Minzu University', zh: '云南民族大学' },
   },
 ]
 
