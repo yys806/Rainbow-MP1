@@ -39,6 +39,7 @@ type RawCourse = {
 
 const courseEnTitles: Record<string, string> = {
   '0201042': 'Introduction to the Community of the Chinese Nation',
+  '0301015': 'Public Finance',
   '0301023': 'College Career Development Planning',
   '0301036': 'Principles of Management',
   '0301055': 'Accounting',
@@ -79,6 +80,7 @@ const courseEnTitles: Record<string, string> = {
   '0301040': 'International Economics (Bilingual)',
   '0301066': 'Finance',
   '0301088': 'Human Resource Management',
+  '0301086': 'Population, Resources and Environmental Economics',
   '1001292': 'College English 4',
   '0701229': 'Physical Education 4',
   '0201052': 'Situation & Policy 4',
@@ -125,7 +127,10 @@ const weightedGpa = (courses: RawCourse[]): number => {
 
 // Awards
 export const awardsHeadLine: LocalizedString = { en: 'Awards & Honors', zh: '奖项与荣誉' }
-export const awardsIntro: LocalizedString = { en: 'Scholarships received during undergraduate study.', zh: '本科阶段获得的奖学金。' }
+export const awardsIntro: LocalizedString = {
+  en: 'Scholarships, competitions, and campus honors received during undergraduate study.',
+  zh: '本科阶段获得的奖学金、竞赛奖项与校园荣誉。',
+}
 export const awards: Array<ActivityItemType> = [
   {
     name: { en: 'Mandarin Proficiency Test (Level 2-A)', zh: '普通话二级甲等' },
@@ -136,14 +141,38 @@ export const awards: Array<ActivityItemType> = [
   {
     name: { en: 'Long Shengwen Scholarship', zh: '龙绳文奖学金' },
     description: { en: 'Scholarship awarded for academic excellence.', zh: '以学业表现获得的奖学金。' },
-    date: { en: '2025', zh: '2025' },
+    date: { en: '2024', zh: '2024' },
     location: { en: 'Yunnan', zh: '云南' },
   },
   {
-    name: { en: 'University-level Scholarship', zh: '校级奖学金' },
-    description: { en: '￥1000,University scholarship for outstanding performance.', zh: '1000元，因综合表现优异获得的校级三等奖学金。' },
-    date: { en: '2025.12', zh: '2025.12' },
+    name: { en: 'University Third-class Scholarship', zh: '校级三等奖学金' },
+    description: { en: 'University scholarship for strong overall performance.', zh: '因综合表现优异获得的校级三等奖学金。' },
+    date: { en: '2025', zh: '2025' },
+    location: { en: 'Yunnan Minzu University', zh: '云南民族大学' },
+  },
+  {
+    name: { en: 'Market Survey Competition, Third Prize', zh: '市场调查竞赛校级三等奖' },
+    description: { en: 'University-level third prize in the market survey competition.', zh: '市场调查相关竞赛校级三等奖。' },
+    date: { en: '2025', zh: '2025' },
+    location: { en: 'Yunnan Minzu University', zh: '云南民族大学' },
+  },
+  {
+    name: { en: 'Market Survey Competition, Third Prize', zh: '市场调查竞赛校级三等奖' },
+    description: { en: 'University-level third prize in the market survey competition.', zh: '市场调查相关竞赛校级三等奖。' },
+    date: { en: '2026', zh: '2026' },
+    location: { en: 'Yunnan Minzu University', zh: '云南民族大学' },
+  },
+  {
+    name: { en: 'National English Translation Contest, Provincial Third Prize', zh: '全国英语翻译大赛省级三等奖' },
+    description: { en: 'Provincial third prize in the National English Translation Contest.', zh: '在全国英语翻译大赛中获得省级三等奖。' },
+    date: { en: '2023', zh: '2023' },
     location: { en: 'Yunnan', zh: '云南' },
+  },
+  {
+    name: { en: 'ICBC Cup, University-level Excellence Award', zh: '工行杯校级优秀奖' },
+    description: { en: 'University-level excellence award in the ICBC Cup competition.', zh: '在“工行杯”竞赛中获得校级优秀奖。' },
+    date: { en: '2026', zh: '2026' },
+    location: { en: 'Yunnan Minzu University', zh: '云南民族大学' },
   },
 ]
 
@@ -208,11 +237,13 @@ const raw2025Spring: RawCourse[] = [
 ]
 
 const raw2025Fall: RawCourse[] = [
+  { code: '0301015', title: '财政学', module: '专业基础课', nature: '必修', score: 83.5, credit: 3.0, gpa: 3.3, creditGpa: 9.9, study: '初修', minor: '主修' },
   { code: '0301038', title: '国际金融学', module: '专业选修课', nature: '选修', score: 85.8, credit: 2.0, gpa: 3.7, creditGpa: 7.4, study: '初修', minor: '主修' },
   { code: '0301043', title: '国际贸易学（双语）', module: '专业选修课', nature: '选修', score: 93.5, credit: 2.0, gpa: 3.9, creditGpa: 7.8, study: '初修', minor: '主修' },
   { code: '0301062', title: '计量经济学', module: '专业基础课', nature: '必修', score: 88.8, credit: 3.0, gpa: 3.7, creditGpa: 11.1, study: '初修', minor: '主修' },
   { code: '0301068', title: '经济法', module: '专业选修课', nature: '选修', score: 94.5, credit: 2.0, gpa: 4.0, creditGpa: 8.0, study: '初修', minor: '主修' },
   { code: '0301079', title: '劳动经济学', module: '专业选修课', nature: '选修', score: 85.1, credit: 2.0, gpa: 3.7, creditGpa: 7.4, study: '初修', minor: '主修' },
+  { code: '0301086', title: '人口、资源与环境经济学', module: '专业选修课', nature: '选修', score: 84.42, credit: 2.0, gpa: 3.3, creditGpa: 6.6, study: '初修', minor: '主修' },
   { code: '0201053', title: '形势与政策5', module: '选修', nature: '选修', score: 98.75, credit: 0.0, gpa: 4.0, creditGpa: 0.0, study: '初修', minor: '主修' },
   { code: '03010038', title: '计量经济学实训', module: '综合实践', nature: '必修', score: 93, credit: 1.0, gpa: 3.9, creditGpa: 3.9, study: '初修', minor: '主修' },
   { code: '02010025', title: '习近平新时代中国特色社会主义思想概论', module: '公共必修课', nature: '必修', score: 85.25, credit: 3.0, gpa: 3.7, creditGpa: 11.1, study: '初修', minor: '主修' },

@@ -26,6 +26,11 @@ function CareerItem({ careerItem }: { careerItem: CareerItemType }) {
         <dd className="text-xs text-muted-foreground">
           {selectText(careerItem.title, locale)}
         </dd>
+        {careerItem.description && (
+          <dd className="mt-2 w-full text-xs leading-5 text-muted-foreground">
+            {selectText(careerItem.description, locale)}
+          </dd>
+        )}
         <dt className="sr-only">Date</dt>
         <dd
           className="ml-auto text-xs text-muted-foreground"
