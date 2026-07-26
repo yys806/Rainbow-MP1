@@ -92,6 +92,7 @@ export function ProjectCard({ project, titleAs }: { project: ProjectItemType, ti
             href={utmLink}
             target='_blank'
             rel='noopener noreferrer'
+            aria-label={selectText(project.name, locale)}
             className='absolute inset-0 z-20'>
             <ArrowUpRight size={32} weight="duotone" className="absolute top-4 right-4 h-4 w-4 group-hover:text-primary group-hover:cursor-pointer" />
           </Link>

@@ -2,7 +2,7 @@ import { type Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import clsx from 'clsx'
-import { aboutMeHeadline, aboutParagraphs } from '@/config/infoConfig'
+import { aboutMeHeadline, aboutParagraphs, name } from '@/config/infoConfig'
 import { Container } from '@/components/layout/Container'
 import { cookies } from 'next/headers'
 import { Locale, defaultLocale, selectText } from '@/lib/i18n'
@@ -26,7 +26,7 @@ export default function About() {
           <div className="max-w-xs px-2.5 lg:max-w-none">
             <Image
               src={portraitImage}
-              alt=""
+              alt={`Portrait of ${name}`}
               sizes="(min-width: 1024px) 32rem, 20rem"
               className="aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
             />
