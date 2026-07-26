@@ -1,7 +1,7 @@
 ﻿// site config
 import { LocalizedString } from '@/lib/i18n'
 
-export const utm_source = 'derek-portfolio'
+export const utm_source = 'rainbow-mp1'
 
 // navigation config
 export type NavItemType = {
