@@ -47,13 +47,13 @@ export const careerList: Array<CareerItemType> = [
     period: { en: '2024.08', zh: '2024.08' },
   },
   {
-    company: { en: 'Summer Social Practice · Volunteering', zh: '暑期社会实践 · 志愿服务' },
-    title: { en: '“Putonghua for Rural Revitalisation” Programme', zh: '「推普助力乡村振兴」实践项目' },
+    company: { en: 'China International Innovation Competition for College Students', zh: '中国国际大学生创新大赛（大创赛）' },
+    title: { en: 'Event Volunteer', zh: '赛事志愿者' },
     description: {
-      en: 'Took part in summer social-practice and volunteering programmes: went to grassroots villages for research visits and household conversations, ran policy outreach sessions, and wrote up a practice report.',
-      zh: '参加「推普助力乡村振兴」等暑期社会实践：深入基层乡村调研走访、开展政策宣讲，并完成实践报告撰写。',
+      en: 'Served as a volunteer for the China International Innovation Competition for College Students, supporting the event as part of the volunteer team.',
+      zh: '担任「中国国际大学生创新大赛」（大创赛）赛事志愿者，参与大赛志愿服务工作。',
     },
     logo: 'volunteer',
-    period: { en: 'Summer social practice', zh: '暑期社会实践' },
+    period: { en: 'Volunteering', zh: '志愿服务' },
   },
 ]
