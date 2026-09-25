@@ -95,6 +95,17 @@ const courseEnTitles: Record<string, string> = {
   '0201053': 'Situation & Policy 5',
   '03010038': 'Econometrics Practicum',
   '02010025': 'Intro to Xi Jinping Thought on Socialism with Chinese Characteristics for a New Era',
+  '0301017': 'Industrial Economics',
+  '0301022': 'College Student Employment and Entrepreneurship Guidance',
+  '0301051': 'National Economic Management',
+  '0301082': 'Economics of South and Southeast Asia',
+  '0301096': 'Market Survey and Forecasting',
+  '0201054': 'Situation & Policy 6',
+  '0301146': 'Securities Investment',
+  '03010033': 'China Tax System',
+  '03010047': 'Economic History',
+  '03010145': 'Statistical Software and Database Management',
+  '03010158': 'Statistical Software and Database Management Practicum',
 }
 
 const makeCourse = (course: RawCourse): ProjectItemType => ({
@@ -141,7 +152,7 @@ export const awards: Array<ActivityItemType> = [
   {
     name: { en: 'ICBC Cup, University-level Excellence Award', zh: '工行杯校级优秀奖' },
     description: { en: 'University-level excellence award in the ICBC Cup competition.', zh: '在“工行杯”竞赛中获得校级优秀奖。' },
-    date: { en: '2026', zh: '2026' },
+    date: { en: '2025', zh: '2025' },
     location: { en: 'Yunnan Minzu University', zh: '云南民族大学' },
   },
   {
@@ -249,6 +260,21 @@ const raw2025Fall: RawCourse[] = [
   { code: '02010025', title: '习近平新时代中国特色社会主义思想概论', module: '公共必修课', nature: '必修', score: 85.25, credit: 3.0, gpa: 3.7, creditGpa: 11.1, study: '初修', minor: '主修' },
 ]
 
+const raw2026Spring: RawCourse[] = [
+  { code: '0301017', title: '产业经济学', module: '专业选修课', nature: '选修', score: 92, credit: 2.0, gpa: 3.9, creditGpa: 7.8, study: '初修', minor: '主修' },
+  { code: '0301022', title: '大学生就业创业指导', module: '学科专业类基础课', nature: '必修', score: 93.5, credit: 1.0, gpa: 3.9, creditGpa: 3.9, study: '初修', minor: '主修' },
+  { code: '0301051', title: '国民经济管理学', module: '专业基础课', nature: '必修', score: 95.5, credit: 3.0, gpa: 4.0, creditGpa: 12.0, study: '初修', minor: '主修' },
+  { code: '0301082', title: '南亚东南亚经济概况', module: '专业选修课', nature: '选修', score: 91.6, credit: 2.0, gpa: 3.9, creditGpa: 7.8, study: '初修', minor: '主修' },
+  { code: '0301096', title: '市场调查与预测', module: '专业选修课', nature: '选修', score: 91, credit: 2.0, gpa: 3.9, creditGpa: 7.8, study: '初修', minor: '主修' },
+  { code: '0201054', title: '形势与政策6', module: '选修', nature: '选修', score: 99.75, credit: 0.0, gpa: 4.0, creditGpa: 0.0, study: '初修', minor: '主修' },
+  { code: '0301146', title: '证券投资学', module: '专业选修课', nature: '选修', score: 81, credit: 2.0, gpa: 3.0, creditGpa: 6.0, study: '初修', minor: '主修' },
+  { code: '03010033', title: '中国税制', module: '专业选修课', nature: '选修', score: 89.2, credit: 2.0, gpa: 3.7, creditGpa: 7.4, study: '初修', minor: '主修' },
+  { code: '03010047', title: '经济史', module: '专业基础课', nature: '必修', score: 93, credit: 3.0, gpa: 3.9, creditGpa: 11.7, study: '初修', minor: '主修' },
+  { code: '03010145', title: '统计软件与数据库管理', module: '选修', nature: '选修', score: 94.5, credit: 1.0, gpa: 4.0, creditGpa: 4.0, study: '初修', minor: '主修' },
+  { code: '03010158', title: '统计软件与数据库管理实训', module: '综合实践', nature: '选修', score: 91, credit: 1.0, gpa: 3.9, creditGpa: 3.9, study: '初修', minor: '主修' },
+]
+
+const semester2026Spring = mapCourses(raw2026Spring)
 const semester2023Fall = mapCourses(raw2023Fall)
 const semester2023Spring = mapCourses(raw2023Spring)
 const semester2024Fall = mapCourses(raw2024Fall)
@@ -257,9 +283,10 @@ const semester2025Fall = mapCourses(raw2025Fall)
 
 // Headings and sections
 export const projectHeadLine: LocalizedString = { en: 'Grades', zh: '成绩' }
-export const projectIntro: LocalizedString = { en: 'Five semesters of undergraduate grades, grouped by term.', zh: '本科五个学期的课程成绩，按学期划分展示。' }
+export const projectIntro: LocalizedString = { en: 'Six semesters of undergraduate grades, grouped by term.', zh: '本科六个学期的课程成绩，按学期划分展示。' }
 
 export const projectSections: Array<ProjectSectionType> = [
+  { title: { en: '2025-2026 Spring', zh: '2025-2026（下）' }, items: semester2026Spring },
   { title: { en: '2025-2026 Fall', zh: '2025-2026（上）' }, items: semester2025Fall },
   { title: { en: '2024-2025 Spring', zh: '2024-2025（下）' }, items: semester2025Spring },
   { title: { en: '2024-2025 Fall', zh: '2024-2025（上）' }, items: semester2024Fall },
@@ -271,6 +298,7 @@ export const projects: Array<ProjectItemType> = projectSections.flatMap((section
 
 // GPA stats
 export const semesterGpa: number[] = [
+  weightedGpa(raw2026Spring),
   weightedGpa(raw2025Fall),
   weightedGpa(raw2025Spring),
   weightedGpa(raw2024Fall),
@@ -278,6 +306,7 @@ export const semesterGpa: number[] = [
   weightedGpa(raw2023Fall),
 ]
 export const overallGpa: number = weightedGpa([
+  ...raw2026Spring,
   ...raw2025Fall,
   ...raw2025Spring,
   ...raw2024Fall,
