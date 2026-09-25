@@ -3,6 +3,8 @@
 import {
   Bank,
   Buildings,
+  DeviceMobile,
+  HandHeart,
   GithubLogo,
   XLogo,
   InstagramLogo,
@@ -30,6 +32,10 @@ export function CustomIcon({
       return <Bank size={size} weight="duotone" />
     case 'government':
       return <Buildings size={size} weight="duotone" />
+    case 'phone':
+      return <DeviceMobile size={size} weight="duotone" />
+    case 'volunteer':
+      return <HandHeart size={size} weight="duotone" />
     case 'github':
       return <GithubLogo size={size} weight="duotone" />
     case 'x':

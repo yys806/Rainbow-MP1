@@ -34,9 +34,15 @@ function CareerItem({ careerItem }: { careerItem: CareerItemType }) {
         <dt className="sr-only">Date</dt>
         <dd
           className="ml-auto text-xs text-muted-foreground"
-          aria-label={`${careerItem.start} until ${careerItem.end}`}
+          aria-label={
+            careerItem.period
+              ? selectText(careerItem.period, locale)
+              : `${careerItem.start} until ${careerItem.end}`
+          }
         >
-          {careerItem.start} - {careerItem.end}
+          {careerItem.period
+            ? selectText(careerItem.period, locale)
+            : `${careerItem.start} - ${careerItem.end}`}
         </dd>
       </dl>
     </li>
